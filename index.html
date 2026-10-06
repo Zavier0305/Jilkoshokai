@@ -3,309 +3,323 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>ザビエル キャラ詳細</title>
-  <meta name="description" content="ファンパレ実況YouTuber・ザビエルのプロフィール。ゲームのキャラ詳細画面風にまとめています。">
+  <title>ザビエル</title>
+  <meta name="description" content="ファンパレ実況YouTuber・ザビエルのプロフィール。実況も、開発も。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700;800&family=IBM+Plex+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
-    /* レイアウト：ゲームの「キャラ詳細画面」。左にSSRカード、右にステータス・スキル・装備 */
+    /* レイアウト：製品LP。中央揃えの巨大見出し → 端末モック → 横スクロールのハイライト → 黒のスペック → タイル → 締めのCTA */
     :root {
-      --paper: #eceef2;
-      --surface: #ffffff;
-      --ink: #12141c;
-      --muted: #5b6070;
-      --line: #d5d8e0;
-      --accent: #2337c6;
-      --card: #1f2fb0;
-      --card-deep: #141f7a;
-      --on-card: #ffffff;
-      --gold: #b8892b;
-      --gold-soft: #e8c97a;
-      --track: #e1e4ea;
-
-      --f-display: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
-      --f-body: "IBM Plex Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
-      --f-mono: "IBM Plex Mono", ui-monospace, monospace;
+      --bg: #ffffff;
+      --bg-alt: #f5f5f7;
+      --ink: #1d1d1f;
+      --sub: #6e6e73;
+      --blue: #0071e3;
+      --blue-hover: #0077ed;
+      --new: #bf4800;
+      --night: #000000;
+      --night-ink: #f5f5f7;
+      --night-sub: #86868b;
+      --font: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
       color-scheme: light;
     }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --paper: #0f1117; --surface: #171a23; --ink: #e9ebf2; --muted: #9298a8; --line: #2a2e3a;
-        --accent: #8593ff; --card: #26338f; --card-deep: #161f5c; --gold: #e0b252; --gold-soft: #f0d58e; --track: #252935;
-        color-scheme: dark;
-      }
-    }
-    :root[data-theme="dark"] {
-      --paper: #0f1117; --surface: #171a23; --ink: #e9ebf2; --muted: #9298a8; --line: #2a2e3a;
-      --accent: #8593ff; --card: #26338f; --card-deep: #161f5c; --gold: #e0b252; --gold-soft: #f0d58e; --track: #252935;
-      color-scheme: dark;
-    }
-
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: var(--f-body);
-      font-size: 15px;
-      line-height: 1.75;
-      padding-inline: 16px;
-      padding-block: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px);
+      margin: 0; background: var(--bg); color: var(--ink);
+      font-family: var(--font); font-size: 17px; line-height: 1.5;
+      letter-spacing: .01em; -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    a { color: inherit; }
-    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    .page { max-width: 1040px; margin: 0 auto; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+    .wrap { max-width: 980px; margin: 0 auto; padding-inline: 22px; }
+    h1, h2, h3 { text-wrap: balance; margin: 0; }
 
-    /* 上部バー */
-    .topbar {
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      padding-block: 20px; border-bottom: 1px solid var(--line);
-      font-size: 13px; color: var(--muted);
+    /* ローカルナビ */
+    .localnav {
+      position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+      background: rgba(255, 255, 255, .72); backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, .12);
     }
-    .crumb b { color: var(--ink); font-weight: 500; }
-    .topbar a { text-decoration: none; color: var(--accent); font-weight: 500; }
+    .localnav .wrap { display: flex; align-items: center; gap: 24px; height: 52px; }
+    .localnav .name { font-size: 21px; font-weight: 700; color: var(--ink); margin-right: auto; letter-spacing: 0; }
+    .localnav .name:hover { text-decoration: none; }
+    .localnav .lnk { font-size: 12px; color: var(--ink); opacity: .85; }
+    .pill {
+      display: inline-block; background: var(--blue); color: #fff; border-radius: 980px;
+      font-size: 12px; padding: 4px 12px; line-height: 1.4;
+    }
+    .pill:hover { background: var(--blue-hover); text-decoration: none; }
 
-    /* 本体グリッド */
-    .detail {
-      display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
-      gap: 56px; padding-block: 48px 72px; align-items: start;
-    }
-
-    /* ── SSRカード ── */
-    .card {
-      position: sticky; top: calc(24px + env(safe-area-inset-top, 0px));
-      aspect-ratio: 5 / 8; max-width: 100%;
-      border-radius: 6px; padding: 10px;
-      background: linear-gradient(150deg, var(--gold-soft), var(--gold) 45%, var(--gold-soft) 70%, var(--gold));
-      box-shadow: 0 30px 60px -30px rgba(20, 31, 122, .55);
-      animation: summon .9s cubic-bezier(.2, .8, .2, 1) both;
-    }
-    .card-inner {
-      position: relative; height: 100%; border-radius: 3px; overflow: hidden;
-      color: var(--on-card);
-      background:
-        repeating-linear-gradient(135deg, rgba(255,255,255,.045) 0 2px, transparent 2px 14px),
-        radial-gradient(120% 70% at 50% 0%, var(--card), var(--card-deep));
-      display: grid; grid-template-rows: auto 1fr auto; padding: 18px;
-      container-type: size;
-    }
-    .card-inner::after {   /* 登場時の光 */
-      content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(110deg, transparent 35%, rgba(255,255,255,.55) 50%, transparent 65%);
-      transform: translateX(-120%);
-      animation: shine 1.1s .6s ease-out both;
-    }
-    .card-top { display: flex; justify-content: space-between; align-items: center; }
-    .stars { color: var(--gold-soft); letter-spacing: 2px; font-size: 15px; }
-    .stars span { display: inline-block; animation: pop .35s cubic-bezier(.3, 1.6, .5, 1) both; }
-    .stars span:nth-child(1) { animation-delay: .75s; }
-    .stars span:nth-child(2) { animation-delay: .85s; }
-    .stars span:nth-child(3) { animation-delay: .95s; }
-    .stars span:nth-child(4) { animation-delay: 1.05s; }
-    .stars span:nth-child(5) { animation-delay: 1.15s; }
-    .rarity {
-      font-family: var(--f-display); font-weight: 800; font-size: 20px; line-height: 1;
-      color: var(--card-deep); background: var(--gold-soft); padding: 4px 8px 5px; border-radius: 2px;
-    }
-    .card-name {
-      writing-mode: vertical-rl; justify-self: center; align-self: center;
-      font-family: var(--f-display); font-weight: 800;
-      font-size: min(15cqh, 34cqw); line-height: 1; letter-spacing: .06em;
-      text-shadow: 0 2px 0 var(--card-deep), 0 0 40px rgba(255,255,255,.25);
-    }
-    .card-name small {
-      font-family: var(--f-mono); font-size: 11px; letter-spacing: .3em; font-weight: 500;
-      text-shadow: none; opacity: .7; margin-top: 18px;
-    }
-    .card-foot {
-      display: flex; justify-content: space-between; align-items: end; gap: 8px;
-      border-top: 1px solid rgba(255,255,255,.25); padding-top: 12px; font-size: 12px;
-    }
-    .card-foot .no { font-family: var(--f-mono); opacity: .75; }
-    .chips { display: flex; gap: 6px; flex-wrap: wrap; }
-    .chip { border: 1px solid rgba(255,255,255,.5); padding: 1px 8px; border-radius: 2px; }
-
-    @keyframes summon { from { opacity: 0; transform: translateY(24px) scale(.96) rotateY(-14deg); } }
-    @keyframes shine { to { transform: translateX(120%); } }
-    @keyframes pop { from { opacity: 0; transform: scale(.2); } }
-
-    /* ── 右カラム ── */
-    .info { display: grid; gap: 52px; min-width: 0; }
-    .label {
-      font-size: 12px; font-weight: 700; letter-spacing: .14em; color: var(--muted);
-      display: flex; align-items: center; gap: 12px; margin: 0 0 18px;
-    }
-    .label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-
-    .intro h1 {
-      font-family: var(--f-display); font-weight: 800; font-size: clamp(40px, 6vw, 56px);
-      line-height: 1.1; margin: 0; text-wrap: balance;
-    }
-    .intro .handle { font-family: var(--f-mono); font-size: 13px; color: var(--accent); margin: 10px 0 20px; }
-    .intro p.lead { margin: 0; max-width: 34em; font-size: 16px; }
-
-    /* ステータス */
-    .stats { display: grid; gap: 14px; margin: 0; }
-    .stat { display: grid; grid-template-columns: 5.5em minmax(0, 1fr) 3ch; gap: 16px; align-items: center; }
-    .stat dt { font-size: 14px; font-weight: 500; }
-    .stat dd { margin: 0; display: contents; }
-    .bar { height: 6px; background: var(--track); border-radius: 3px; overflow: hidden; }
-    .bar i {
-      display: block; height: 100%; width: var(--v); background: var(--accent); border-radius: 3px;
-      transform-origin: left; animation: fill 1s cubic-bezier(.2, .8, .2, 1) both;
-    }
-    .stat:nth-child(2) .bar i { animation-delay: .1s; }
-    .stat:nth-child(3) .bar i { animation-delay: .2s; }
-    .stat:nth-child(4) .bar i { animation-delay: .3s; }
-    .bar.max i { background: var(--gold); }
-    .num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; text-align: right; font-size: 14px; }
-    @keyframes fill { from { transform: scaleX(0); } }
-
-    /* スキル */
-    .skills { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
-    .skill {
-      display: grid; grid-template-columns: 4.5em minmax(0, 1fr); gap: 16px;
-      padding-block: 18px; border-top: 1px solid var(--line);
-    }
-    .skill:nth-last-child(2) { border-bottom: 1px solid var(--line); }
-    .slot { font-size: 12px; color: var(--muted); padding-top: 4px; }
-    .skill h3 { margin: 0 0 4px; font-size: 17px; font-weight: 700; }
-    .skill p { margin: 0; color: var(--muted); font-size: 14px; }
-    .skill.ult {
-      background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--gold);
-      padding-inline: 16px; margin-top: 14px; border-radius: 3px;
-    }
-    .skill.ult .slot { color: var(--gold); font-weight: 700; }
-    .skill.ult h3 { font-family: var(--f-display); font-size: 20px; }
-
-    /* 装備（作品） */
-    .gear { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: 12px; }
-    .item {
-      display: grid; gap: 6px; align-content: start;
-      background: var(--surface); border: 1px solid var(--line); border-radius: 3px;
-      padding: 16px; text-decoration: none; transition: border-color .2s, transform .2s;
-    }
-    a.item:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .item h3 { margin: 0; font-size: 15px; }
-    .item p { margin: 0; font-size: 13px; color: var(--muted); }
-    .state { justify-self: start; font-size: 11px; font-weight: 700; padding: 1px 8px; border-radius: 2px; border: 1px solid currentColor; }
-    .state.live { color: var(--accent); }
-    .state.wip { color: var(--gold); }
-    .state.soon { color: var(--muted); }
-
-    /* ボタン */
-    .cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    /* ヒーロー */
+    .hero { text-align: center; padding-top: 64px; }
+    .eyebrow { color: var(--new); font-size: 17px; font-weight: 600; margin: 0 0 6px; }
+    .hero h1 { font-size: clamp(56px, 11vw, 96px); font-weight: 700; letter-spacing: -.015em; line-height: 1.05; }
+    .hero .tagline { font-size: clamp(22px, 3.4vw, 28px); font-weight: 600; margin: 10px 0 0; }
+    .hero .ctas { display: flex; justify-content: center; align-items: center; gap: 28px; flex-wrap: wrap; margin-top: 24px; font-size: 17px; }
     .btn {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: var(--accent); color: var(--surface); text-decoration: none;
-      font-weight: 700; font-size: 15px; padding: 14px 26px; border-radius: 3px;
-      transition: transform .15s;
+      display: inline-block; background: var(--blue); color: #fff; border-radius: 980px;
+      padding: 11px 22px; font-size: 17px;
     }
-    .btn:hover { transform: translateY(-2px); }
-    .btn svg { width: 16px; height: 16px; fill: currentColor; }
-    .cta small { color: var(--muted); font-size: 13px; }
+    .btn:hover { background: var(--blue-hover); text-decoration: none; }
+    .more::after { content: " ›"; }
 
-    footer { border-top: 1px solid var(--line); padding-block: 24px 40px; font-size: 12px; color: var(--muted); }
+    .hero h1, .hero .tagline, .hero .ctas, .eyebrow { animation: rise 1s cubic-bezier(.2, .7, .2, 1) both; }
+    .hero .tagline { animation-delay: .1s; }
+    .hero .ctas { animation-delay: .2s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
 
-    @media (max-width: 820px) {
-      .detail { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-block: 32px 56px; }
-      .card { position: relative; top: 0; width: min(300px, 100%); margin-inline: auto; }
+    /* 端末モック */
+    .stage { display: grid; place-items: center; padding-block: 56px 96px; }
+    .device {
+      width: min(320px, 82vw); aspect-ratio: 9 / 19.2; max-width: 100%;
+      border-radius: 54px; padding: 12px;
+      background: linear-gradient(145deg, #3a3a3c, #1c1c1e 40%, #48484a 70%, #1c1c1e);
+      box-shadow: 0 50px 100px -30px rgba(0,0,0,.45), inset 0 0 0 1.5px rgba(255,255,255,.18);
+      animation: float-in 1.4s .25s cubic-bezier(.2, .7, .2, 1) both;
+    }
+    @keyframes float-in { from { opacity: 0; transform: translateY(60px) scale(.94); } }
+    .screen {
+      height: 100%; border-radius: 42px; overflow: hidden; position: relative;
+      background: #0f0f0f; color: #f1f1f1; font-size: 11px;
+      display: flex; flex-direction: column;
+    }
+    .island { position: absolute; top: 10px; left: 50%; translate: -50% 0; width: 92px; height: 26px; background: #000; border-radius: 20px; z-index: 2; }
+    .sbar { display: flex; justify-content: space-between; padding: 14px 26px 0; font-weight: 600; font-size: 12px; height: 44px; }
+    .banner { height: 70px; margin: 6px 12px 0; border-radius: 12px; background:
+      radial-gradient(120% 140% at 0% 0%, #5b3cf5, transparent 60%),
+      radial-gradient(120% 140% at 100% 100%, #e0389a, transparent 60%), #1a1036; }
+    .ch { display: flex; gap: 10px; align-items: center; padding: 12px 14px 8px; }
+    .ava { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-weight: 900; font-size: 20px;
+      background: linear-gradient(135deg, #ff9f0a, #ff375f); color: #fff; flex: none; }
+    .ch b { font-size: 14px; display: block; }
+    .ch span { color: #aaa; }
+    .sub-btn { margin: 4px 14px 10px; background: #f1f1f1; color: #0f0f0f; text-align: center; border-radius: 18px; padding: 7px; font-weight: 700; font-size: 12px; }
+    .tabs { display: flex; gap: 14px; padding: 0 14px; border-bottom: 1px solid #272727; color: #aaa; font-weight: 600; }
+    .tabs span { padding-bottom: 7px; }
+    .tabs .on { color: #fff; border-bottom: 2px solid #fff; }
+    .vids { padding: 10px 12px; display: grid; gap: 10px; }
+    .vid { display: grid; grid-template-columns: 112px 1fr; gap: 9px; align-items: start; }
+    .thumb { aspect-ratio: 16 / 9; border-radius: 8px; position: relative; overflow: hidden; }
+    .thumb::after { content: ""; position: absolute; right: 4px; bottom: 4px; width: 22px; height: 11px; background: rgba(0,0,0,.75); border-radius: 3px; }
+    .t1 { background: linear-gradient(135deg, #ffd60a, #ff9f0a 50%, #ff375f); }
+    .t2 { background: linear-gradient(135deg, #0a84ff, #5e5ce6); }
+    .t3 { background: linear-gradient(135deg, #30d158, #64d2ff); }
+    .t4 { background: linear-gradient(135deg, #bf5af2, #ff375f); }
+    .vid b { font-size: 11px; line-height: 1.35; display: block; font-weight: 600; }
+    .vid span { color: #aaa; font-size: 10px; }
+
+    /* セクション共通 */
+    .sec { padding-block: 110px; }
+    .sec.alt { background: var(--bg-alt); }
+    .sec-title { font-size: clamp(40px, 6vw, 56px); font-weight: 700; letter-spacing: -.01em; line-height: 1.1; }
+    .sec-lead { color: var(--sub); font-size: clamp(19px, 2.4vw, 24px); font-weight: 600; max-width: 30em; margin: 16px 0 0; line-height: 1.4; }
+    .sec-lead b { color: var(--ink); }
+
+    /* ハイライト（横スクロール） */
+    .rail {
+      display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+      --edge: max(22px, calc((100% - 980px) / 2 + 22px));
+      padding: 48px var(--edge) 24px; scroll-padding-inline: var(--edge);
+      scrollbar-width: none;
+    }
+    .rail::-webkit-scrollbar { display: none; }
+    .hl {
+      flex: none; width: min(372px, 80vw); aspect-ratio: 372 / 500; scroll-snap-align: start;
+      border-radius: 28px; padding: 34px 30px; position: relative; overflow: hidden;
+      color: #fff; display: flex; flex-direction: column;
+    }
+    .hl h3 { font-size: 28px; font-weight: 700; line-height: 1.2; position: relative; }
+    .hl p { margin: 10px 0 0; font-size: 15px; opacity: .85; position: relative; }
+    .hl .big { position: absolute; right: -10px; bottom: -40px; font-size: 220px; font-weight: 900; line-height: 1; opacity: .18; letter-spacing: -.05em; }
+    .h1c { background: linear-gradient(160deg, #ff9f0a, #ff375f); }
+    .h2c { background: linear-gradient(160deg, #0a84ff, #5e5ce6); }
+    .h3c { background: linear-gradient(160deg, #30d158, #0f9d8a); }
+    .h4c { background: linear-gradient(160deg, #1d1d1f, #3a3a3c); }
+    .rail-nav { display: flex; justify-content: flex-end; gap: 14px; }
+    .rail-nav button {
+      width: 36px; height: 36px; border-radius: 50%; border: 0; cursor: pointer;
+      background: #e8e8ed; color: var(--ink); font-size: 18px; line-height: 1;
+    }
+    .rail-nav button:hover { background: #dcdce1; }
+    .rail-nav button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+    /* 黒いスペック */
+    .night { background: var(--night); color: var(--night-ink); text-align: center; }
+    .night .sec-title {
+      background: linear-gradient(90deg, #ffb340, #ff375f 45%, #bf5af2);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      font-size: clamp(48px, 9vw, 96px);
+    }
+    .night .sec-lead { color: var(--night-sub); margin-inline: auto; }
+    .night .sec-lead b { color: var(--night-ink); }
+    .specs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 72px; }
+    .spec strong { display: block; font-size: clamp(48px, 7vw, 72px); font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+    .spec span { display: block; margin-top: 10px; color: var(--night-sub); font-size: 15px; }
+
+    /* タイル（作品） */
+    .tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 48px; }
+    .tile {
+      background: var(--bg); border-radius: 28px; padding: 44px 36px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 10px; min-height: 280px; justify-content: center;
+    }
+    .tile.wide { grid-column: 1 / -1; }
+    .tile .tag { font-size: 14px; font-weight: 600; color: var(--new); }
+    .tile .tag.live { color: #1a8a3a; }
+    .tile .tag.soon { color: var(--sub); }
+    .tile h3 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; line-height: 1.15; }
+    .tile p { margin: 0; color: var(--sub); max-width: 26em; }
+    .tile a.more { margin-top: 6px; }
+
+    /* 締め */
+    .final { text-align: center; }
+    .final .sec-title { font-size: clamp(40px, 7vw, 64px); }
+    .final .ctas { margin-top: 28px; display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; align-items: center; }
+
+    footer { background: var(--bg-alt); color: var(--sub); font-size: 12px; padding-block: 20px 36px; line-height: 1.6; }
+    footer .wrap > * { margin: 0; padding-block: 10px; }
+    footer .wrap > * + * { border-top: 1px solid #d2d2d7; }
+
+    @media (max-width: 734px) {
+      .localnav .lnk { display: none; }
+      .sec { padding-block: 80px; }
+      .specs { grid-template-columns: minmax(0, 1fr); gap: 44px; }
+      .tiles { grid-template-columns: minmax(0, 1fr); }
+      .tile { min-height: 0; padding: 40px 24px; }
     }
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: none !important; }
+      *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <header class="topbar">
-      <span class="crumb">キャラ一覧 › <b>ザビエル</b></span>
-      <a href="https://www.youtube.com/@%E3%82%B6%E3%83%93%E3%82%A8%E3%83%AB-zav" target="_blank" rel="noopener">YouTube ↗</a>
-    </header>
+  <nav class="localnav" aria-label="ページ内">
+    <div class="wrap">
+      <a class="name" href="#top">ザビエル</a>
+      <a class="lnk" href="#highlights">概要</a>
+      <a class="lnk" href="#works">作品</a>
+      <a class="pill" href="https://www.youtube.com/@%E3%82%B6%E3%83%93%E3%82%A8%E3%83%AB-zav" target="_blank" rel="noopener">登録</a>
+    </div>
+  </nav>
 
-    <main class="detail">
-      <aside class="card" aria-label="キャラカード">
-        <div class="card-inner">
-          <div class="card-top">
-            <div class="stars" aria-label="星5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <div class="rarity">SSR</div>
-          </div>
-          <div class="card-name">ザビエル<small>ZAVIER</small></div>
-          <div class="card-foot">
-            <div class="chips"><span class="chip">実況</span><span class="chip">開発</span></div>
-            <span class="no">No.0305</span>
-          </div>
+  <header class="hero wrap" id="top">
+    <p class="eyebrow">ファンパレ実況</p>
+    <h1>ザビエル</h1>
+    <p class="tagline">実況も、開発も。全力で。</p>
+    <div class="ctas">
+      <a class="btn" href="https://www.youtube.com/@%E3%82%B6%E3%83%93%E3%82%A8%E3%83%AB-zav" target="_blank" rel="noopener">チャンネルを見る</a>
+      <a class="more" href="#works">作品を見る</a>
+    </div>
+  </header>
+
+  <div class="stage" aria-hidden="true">
+    <div class="device">
+      <div class="screen">
+        <div class="island"></div>
+        <div class="sbar"><span>9:41</span><span>●●●</span></div>
+        <div class="banner"></div>
+        <div class="ch"><div class="ava">ザ</div><div><b>ザビエル</b><span>@ザビエル-zav</span></div></div>
+        <div class="sub-btn">チャンネル登録</div>
+        <div class="tabs"><span class="on">ホーム</span><span>動画</span><span>ショート</span></div>
+        <div class="vids">
+          <div class="vid"><div class="thumb t1"></div><div><b>ガチャ・バトル反応</b><span>ザビエル</span></div></div>
+          <div class="vid"><div class="thumb t2"></div><div><b>数値検証</b><span>ザビエル</span></div></div>
+          <div class="vid"><div class="thumb t3"></div><div><b>初心者向け豆知識</b><span>ザビエル</span></div></div>
+          <div class="vid"><div class="thumb t4"></div><div><b>個人開発の記録</b><span>ザビエル</span></div></div>
         </div>
-      </aside>
-
-      <div class="info">
-        <section class="intro">
-          <p class="label">プロフィール</p>
-          <h1>ザビエル</h1>
-          <p class="handle">@ザビエル-zav</p>
-          <p class="lead">YouTubeでファンパレ（呪術廻戦 ファントムパレード）のゲーム実況をしています。非エンジニア出身ですが、Claude Codeを使って Webアプリやゲームも作っています。</p>
-        </section>
-
-        <section>
-          <p class="label">ステータス</p>
-          <dl class="stats">
-            <div class="stat"><dt>実況力</dt><dd><span class="bar"><i style="--v: 88%"></i></span><span class="num">88</span></dd></div>
-            <div class="stat"><dt>検証力</dt><dd><span class="bar"><i style="--v: 82%"></i></span><span class="num">82</span></dd></div>
-            <div class="stat"><dt>開発力</dt><dd><span class="bar"><i style="--v: 74%"></i></span><span class="num">74</span></dd></div>
-            <div class="stat"><dt>ガチャ運</dt><dd><span class="bar max"><i style="--v: 100%"></i></span><span class="num">???</span></dd></div>
-          </dl>
-        </section>
-
-        <section>
-          <p class="label">スキル（動画のジャンル）</p>
-          <ul class="skills">
-            <li class="skill"><span class="slot">スキル1</span><div><h3>ガチャ・バトル反応</h3><p>新キャラのガチャやバトルを、その場のリアクション込みで届ける。</p></div></li>
-            <li class="skill"><span class="slot">スキル2</span><div><h3>数値検証</h3><p>ダメージや性能を実際に試し、数字で比べて結論を出す。</p></div></li>
-            <li class="skill"><span class="slot">スキル3</span><div><h3>初心者向け豆知識</h3><p>これから始める人がつまずくポイントを、ショート動画で短く解説。</p></div></li>
-            <li class="skill ult"><span class="slot">奥義</span><div><h3>個人開発</h3><p>Claude Codeを相棒に、ゲームに役立つツールや遊べる作品をつくる。</p></div></li>
-          </ul>
-        </section>
-
-        <section>
-          <p class="label">装備（つくったもの）</p>
-          <div class="gear" id="gear"></div>
-        </section>
-
-        <section class="cta">
-          <a class="btn" href="https://www.youtube.com/@%E3%82%B6%E3%83%93%E3%82%A8%E3%83%AB-zav" target="_blank" rel="noopener">
-            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
-            チャンネルを見る
-          </a>
-          <small>ファンパレの動画を投稿しています</small>
-        </section>
       </div>
-    </main>
-
-    <footer>個人のファンサイトです。ゲーム公式とは関係ありません。</footer>
+    </div>
   </div>
 
+  <section class="sec alt" id="highlights">
+    <div class="wrap">
+      <h2 class="sec-title">ハイライトを見る。</h2>
+    </div>
+    <div class="rail" id="rail">
+      <article class="hl h1c"><h3>ガチャの瞬間を、<br>そのまま。</h3><p>新キャラのガチャやバトルを、リアクション込みでお届けします。</p><span class="big">01</span></article>
+      <article class="hl h2c"><h3>数字で、<br>確かめる。</h3><p>ダメージや性能を実際に試して、数値で比べます。</p><span class="big">%</span></article>
+      <article class="hl h3c"><h3>はじめてでも、<br>わかる。</h3><p>これから始める人向けのコツを、ショート動画で短く解説。</p><span class="big">?</span></article>
+      <article class="hl h4c"><h3>Claude Codeで、<br>つくる。</h3><p>非エンジニア出身。それでも、Webアプリやゲームを自分で作っています。</p><span class="big">&lt;/&gt;</span></article>
+    </div>
+    <div class="wrap rail-nav">
+      <button type="button" id="prev" aria-label="前へ">‹</button>
+      <button type="button" id="next" aria-label="次へ">›</button>
+    </div>
+  </section>
+
+  <section class="sec night">
+    <div class="wrap">
+      <h2 class="sec-title">実況 × 開発</h2>
+      <p class="sec-lead">ゲームを<b>遊ぶ</b>だけじゃない。<b>つくる</b>ところまで。<br>ひとりで、全部やっています。</p>
+      <div class="specs">
+        <div class="spec"><strong>3</strong><span>動画ジャンル</span></div>
+        <div class="spec"><strong>1</strong><span>人で企画・撮影・編集・開発</span></div>
+        <div class="spec"><strong>∞</strong><span>ガチャへの情熱</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt" id="works">
+    <div class="wrap">
+      <h2 class="sec-title">つくったもの。</h2>
+      <p class="sec-lead">Claude Codeと一緒に、<b>アイデアを形に。</b></p>
+      <div class="tiles" id="tiles"></div>
+    </div>
+  </section>
+
+  <section class="sec final">
+    <div class="wrap">
+      <h2 class="sec-title">次の動画を、<br>見逃さない。</h2>
+      <div class="ctas">
+        <a class="btn" href="https://www.youtube.com/@%E3%82%B6%E3%83%93%E3%82%A8%E3%83%AB-zav" target="_blank" rel="noopener">チャンネル登録する</a>
+        <a class="more" href="#top">トップへ戻る</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p>本サイトは個人のファンサイトです。ゲームの公式、および本ページのデザインの参考にしたいずれの企業とも関係ありません。</p>
+      <p>© <span id="year"></span> ザビエル</p>
+    </div>
+  </footer>
+
   <script>
-    // 装備（作品）リスト：ここを書き換えると「装備」欄が更新されます
-    // state: "live"（公開中） / "wip"（開発中） / "soon"（準備中）
+    // 作品リスト：ここを書き換えると「つくったもの」が更新されます
+    // state: "live"（公開中） / "wip"（開発中） / "soon"（準備中）、wide: true で横幅いっぱい
     const works = [
-      { title: "ファンパレ便利ツール", desc: "ゲームをもっと快適に遊ぶための自作ツール。", state: "wip", url: "" },
+      { title: "ファンパレ便利ツール", desc: "ゲームをもっと快適に遊ぶための自作ツール。", state: "wip", url: "", wide: true },
       { title: "このホームページ", desc: "Claude Codeと一緒に作ったプロフィールページ。", state: "live", url: "" },
       { title: "次の作品", desc: "近日公開予定。", state: "soon", url: "" },
     ];
-    const stateLabel = { live: "公開中", wip: "開発中", soon: "準備中" };
+    const label = { live: "公開中", wip: "開発中", soon: "準備中" };
 
-    const gear = document.getElementById("gear");
+    const tiles = document.getElementById("tiles");
     for (const w of works) {
-      const el = document.createElement(w.url ? "a" : "div");
-      el.className = "item";
-      if (w.url) { el.href = w.url; el.target = "_blank"; el.rel = "noopener"; }
+      const el = document.createElement("article");
+      el.className = "tile" + (w.wide ? " wide" : "");
+      const tag = document.createElement("span"); tag.className = "tag " + w.state; tag.textContent = label[w.state];
       const h = document.createElement("h3"); h.textContent = w.title;
       const p = document.createElement("p"); p.textContent = w.desc;
-      const s = document.createElement("span"); s.className = "state " + w.state; s.textContent = stateLabel[w.state];
-      el.append(s, h, p);
-      gear.appendChild(el);
+      el.append(tag, h, p);
+      if (w.url) {
+        const a = document.createElement("a"); a.className = "more"; a.href = w.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "見てみる";
+        el.append(a);
+      }
+      tiles.appendChild(el);
     }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ハイライトの左右ボタン
+    const rail = document.getElementById("rail");
+    const step = () => rail.querySelector(".hl").offsetWidth + 20;
+    document.getElementById("prev").addEventListener("click", () => rail.scrollBy({ left: -step(), behavior: "smooth" }));
+    document.getElementById("next").addEventListener("click", () => rail.scrollBy({ left: step(), behavior: "smooth" }));
   </script>
 </body>
 </html>

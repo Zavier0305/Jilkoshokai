@@ -3,323 +3,271 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>ザビエル</title>
-  <meta name="description" content="ファンパレ実況YouTuber・ザビエルのプロフィール。実況も、開発も。">
+  <title>Zavier Portfolio</title>
+  <meta name="description" content="中学生バイブコーダー Zavier のポートフォリオ。個人開発のアプリ・ツールと技術記事。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@700;800&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    /* レイアウト：製品LP。中央揃えの巨大見出し → 端末モック → 横スクロールのハイライト → 黒のスペック → タイル → 締めのCTA */
+    /* レイアウト：1カラムの技術ポートフォリオ。作品は「カード」ではなく、技術スタックとリンクが揃う一覧行で見せる */
+    /* 色とフォントは Link-In-Bio（デジタル名刺）のえんじ×金・明朝を引き継ぐ */
     :root {
-      --bg: #ffffff;
-      --bg-alt: #f5f5f7;
-      --ink: #1d1d1f;
-      --sub: #6e6e73;
-      --blue: #0071e3;
-      --blue-hover: #0077ed;
-      --new: #bf4800;
-      --night: #000000;
-      --night-ink: #f5f5f7;
-      --night-sub: #86868b;
-      --font: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+      --bg: #faf7f1;
+      --surface: #ffffff;
+      --ink: #221d1a;
+      --sub: #6f665c;
+      --line: #e6ddcf;
+      --maroon: #7a0000;
+      --gold: #a97a1f;
+      --code-bg: #f1ebe0;
+
+      --f-head: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+      --f-body: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+      --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
       color-scheme: light;
     }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #161312; --surface: #1e1a18; --ink: #efe8df; --sub: #a59a8d; --line: #332c27;
+        --maroon: #e0716a; --gold: #d4a648; --code-bg: #262120;
+        color-scheme: dark;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #161312; --surface: #1e1a18; --ink: #efe8df; --sub: #a59a8d; --line: #332c27;
+      --maroon: #e0716a; --gold: #d4a648; --code-bg: #262120;
+      color-scheme: dark;
+    }
+
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
       margin: 0; background: var(--bg); color: var(--ink);
-      font-family: var(--font); font-size: 17px; line-height: 1.5;
-      letter-spacing: .01em; -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      font-family: var(--f-body); font-size: 15px; line-height: 1.8;
+      padding-inline: 20px; -webkit-font-smoothing: antialiased;
     }
-    a { color: var(--blue); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
-    .wrap { max-width: 980px; margin: 0 auto; padding-inline: 22px; }
-    h1, h2, h3 { text-wrap: balance; margin: 0; }
+    a { color: inherit; }
+    a:focus-visible { outline: 2px solid var(--maroon); outline-offset: 3px; border-radius: 2px; }
+    .page { max-width: 760px; margin: 0 auto; }
+    h1, h2, h3 { margin: 0; text-wrap: balance; }
+    .mono { font-family: var(--f-mono); }
 
-    /* ローカルナビ */
-    .localnav {
-      position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
-      background: rgba(255, 255, 255, .72); backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 1px solid rgba(0, 0, 0, .12);
+    /* ヘッダー */
+    .top {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      padding-block: 24px; border-bottom: 1px solid var(--line);
     }
-    .localnav .wrap { display: flex; align-items: center; gap: 24px; height: 52px; }
-    .localnav .name { font-size: 21px; font-weight: 700; color: var(--ink); margin-right: auto; letter-spacing: 0; }
-    .localnav .name:hover { text-decoration: none; }
-    .localnav .lnk { font-size: 12px; color: var(--ink); opacity: .85; }
-    .pill {
-      display: inline-block; background: var(--blue); color: #fff; border-radius: 980px;
-      font-size: 12px; padding: 4px 12px; line-height: 1.4;
-    }
-    .pill:hover { background: var(--blue-hover); text-decoration: none; }
+    .top .mark { font-family: var(--f-head); font-weight: 800; font-size: 18px; text-decoration: none; }
+    .top nav { display: flex; gap: 20px; font-family: var(--f-mono); font-size: 13px; }
+    .top nav a { color: var(--sub); text-decoration: none; }
+    .top nav a:hover { color: var(--maroon); }
 
-    /* ヒーロー */
-    .hero { text-align: center; padding-top: 64px; }
-    .eyebrow { color: var(--new); font-size: 17px; font-weight: 600; margin: 0 0 6px; }
-    .hero h1 { font-size: clamp(56px, 11vw, 96px); font-weight: 700; letter-spacing: -.015em; line-height: 1.05; }
-    .hero .tagline { font-size: clamp(22px, 3.4vw, 28px); font-weight: 600; margin: 10px 0 0; }
-    .hero .ctas { display: flex; justify-content: center; align-items: center; gap: 28px; flex-wrap: wrap; margin-top: 24px; font-size: 17px; }
-    .btn {
-      display: inline-block; background: var(--blue); color: #fff; border-radius: 980px;
-      padding: 11px 22px; font-size: 17px;
+    /* イントロ */
+    .intro { padding-block: 72px 56px; }
+    .role { font-family: var(--f-mono); font-size: 13px; color: var(--sub); margin: 0 0 14px; }
+    .role span { color: var(--gold); }
+    .intro h1 {
+      font-family: var(--f-head); font-weight: 800; color: var(--maroon);
+      font-size: clamp(52px, 11vw, 88px); line-height: 1; letter-spacing: .01em;
     }
-    .btn:hover { background: var(--blue-hover); text-decoration: none; }
-    .more::after { content: " ›"; }
-
-    .hero h1, .hero .tagline, .hero .ctas, .eyebrow { animation: rise 1s cubic-bezier(.2, .7, .2, 1) both; }
-    .hero .tagline { animation-delay: .1s; }
-    .hero .ctas { animation-delay: .2s; }
-    @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
-
-    /* 端末モック */
-    .stage { display: grid; place-items: center; padding-block: 56px 96px; }
-    .device {
-      width: min(320px, 82vw); aspect-ratio: 9 / 19.2; max-width: 100%;
-      border-radius: 54px; padding: 12px;
-      background: linear-gradient(145deg, #3a3a3c, #1c1c1e 40%, #48484a 70%, #1c1c1e);
-      box-shadow: 0 50px 100px -30px rgba(0,0,0,.45), inset 0 0 0 1.5px rgba(255,255,255,.18);
-      animation: float-in 1.4s .25s cubic-bezier(.2, .7, .2, 1) both;
+    .intro h1 small { display: block; font-size: 18px; color: var(--sub); letter-spacing: .3em; margin-top: 14px; font-weight: 700; }
+    .about { margin: 32px 0 0; max-width: 38em; font-size: 16px; }
+    .motto {
+      margin: 28px 0 0; padding: 14px 18px; border-left: 3px solid var(--gold);
+      background: var(--surface); font-family: var(--f-head); font-weight: 700; font-size: 18px;
     }
-    @keyframes float-in { from { opacity: 0; transform: translateY(60px) scale(.94); } }
-    .screen {
-      height: 100%; border-radius: 42px; overflow: hidden; position: relative;
-      background: #0f0f0f; color: #f1f1f1; font-size: 11px;
-      display: flex; flex-direction: column;
-    }
-    .island { position: absolute; top: 10px; left: 50%; translate: -50% 0; width: 92px; height: 26px; background: #000; border-radius: 20px; z-index: 2; }
-    .sbar { display: flex; justify-content: space-between; padding: 14px 26px 0; font-weight: 600; font-size: 12px; height: 44px; }
-    .banner { height: 70px; margin: 6px 12px 0; border-radius: 12px; background:
-      radial-gradient(120% 140% at 0% 0%, #5b3cf5, transparent 60%),
-      radial-gradient(120% 140% at 100% 100%, #e0389a, transparent 60%), #1a1036; }
-    .ch { display: flex; gap: 10px; align-items: center; padding: 12px 14px 8px; }
-    .ava { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-weight: 900; font-size: 20px;
-      background: linear-gradient(135deg, #ff9f0a, #ff375f); color: #fff; flex: none; }
-    .ch b { font-size: 14px; display: block; }
-    .ch span { color: #aaa; }
-    .sub-btn { margin: 4px 14px 10px; background: #f1f1f1; color: #0f0f0f; text-align: center; border-radius: 18px; padding: 7px; font-weight: 700; font-size: 12px; }
-    .tabs { display: flex; gap: 14px; padding: 0 14px; border-bottom: 1px solid #272727; color: #aaa; font-weight: 600; }
-    .tabs span { padding-bottom: 7px; }
-    .tabs .on { color: #fff; border-bottom: 2px solid #fff; }
-    .vids { padding: 10px 12px; display: grid; gap: 10px; }
-    .vid { display: grid; grid-template-columns: 112px 1fr; gap: 9px; align-items: start; }
-    .thumb { aspect-ratio: 16 / 9; border-radius: 8px; position: relative; overflow: hidden; }
-    .thumb::after { content: ""; position: absolute; right: 4px; bottom: 4px; width: 22px; height: 11px; background: rgba(0,0,0,.75); border-radius: 3px; }
-    .t1 { background: linear-gradient(135deg, #ffd60a, #ff9f0a 50%, #ff375f); }
-    .t2 { background: linear-gradient(135deg, #0a84ff, #5e5ce6); }
-    .t3 { background: linear-gradient(135deg, #30d158, #64d2ff); }
-    .t4 { background: linear-gradient(135deg, #bf5af2, #ff375f); }
-    .vid b { font-size: 11px; line-height: 1.35; display: block; font-weight: 600; }
-    .vid span { color: #aaa; font-size: 10px; }
+    .motto small { display: block; font-family: var(--f-body); font-weight: 400; font-size: 13px; color: var(--sub); margin-top: 2px; }
 
-    /* セクション共通 */
-    .sec { padding-block: 110px; }
-    .sec.alt { background: var(--bg-alt); }
-    .sec-title { font-size: clamp(40px, 6vw, 56px); font-weight: 700; letter-spacing: -.01em; line-height: 1.1; }
-    .sec-lead { color: var(--sub); font-size: clamp(19px, 2.4vw, 24px); font-weight: 600; max-width: 30em; margin: 16px 0 0; line-height: 1.4; }
-    .sec-lead b { color: var(--ink); }
+    /* セクション見出し */
+    section.block { padding-block: 48px; border-top: 1px solid var(--line); }
+    .block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 28px; }
+    .block-head h2 { font-family: var(--f-head); font-weight: 800; font-size: 26px; }
+    .block-head .count { font-family: var(--f-mono); font-size: 12px; color: var(--sub); }
 
-    /* ハイライト（横スクロール） */
-    .rail {
-      display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
-      --edge: max(22px, calc((100% - 980px) / 2 + 22px));
-      padding: 48px var(--edge) 24px; scroll-padding-inline: var(--edge);
-      scrollbar-width: none;
+    /* スキル */
+    .skills { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+    .skills li {
+      font-family: var(--f-mono); font-size: 13px; padding: 3px 10px; border-radius: 4px;
+      background: var(--code-bg); color: var(--ink);
     }
-    .rail::-webkit-scrollbar { display: none; }
-    .hl {
-      flex: none; width: min(372px, 80vw); aspect-ratio: 372 / 500; scroll-snap-align: start;
-      border-radius: 28px; padding: 34px 30px; position: relative; overflow: hidden;
-      color: #fff; display: flex; flex-direction: column;
-    }
-    .hl h3 { font-size: 28px; font-weight: 700; line-height: 1.2; position: relative; }
-    .hl p { margin: 10px 0 0; font-size: 15px; opacity: .85; position: relative; }
-    .hl .big { position: absolute; right: -10px; bottom: -40px; font-size: 220px; font-weight: 900; line-height: 1; opacity: .18; letter-spacing: -.05em; }
-    .h1c { background: linear-gradient(160deg, #ff9f0a, #ff375f); }
-    .h2c { background: linear-gradient(160deg, #0a84ff, #5e5ce6); }
-    .h3c { background: linear-gradient(160deg, #30d158, #0f9d8a); }
-    .h4c { background: linear-gradient(160deg, #1d1d1f, #3a3a3c); }
-    .rail-nav { display: flex; justify-content: flex-end; gap: 14px; }
-    .rail-nav button {
-      width: 36px; height: 36px; border-radius: 50%; border: 0; cursor: pointer;
-      background: #e8e8ed; color: var(--ink); font-size: 18px; line-height: 1;
-    }
-    .rail-nav button:hover { background: #dcdce1; }
-    .rail-nav button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
-    /* 黒いスペック */
-    .night { background: var(--night); color: var(--night-ink); text-align: center; }
-    .night .sec-title {
-      background: linear-gradient(90deg, #ffb340, #ff375f 45%, #bf5af2);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-      font-size: clamp(48px, 9vw, 96px);
+    /* 注目作品（ファンパレ便利ツール） */
+    .featured {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+      padding: 28px; display: grid; gap: 16px; margin-bottom: 8px;
     }
-    .night .sec-lead { color: var(--night-sub); margin-inline: auto; }
-    .night .sec-lead b { color: var(--night-ink); }
-    .specs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 72px; }
-    .spec strong { display: block; font-size: clamp(48px, 7vw, 72px); font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
-    .spec span { display: block; margin-top: 10px; color: var(--night-sub); font-size: 15px; }
+    .featured .eyebrow { font-family: var(--f-mono); font-size: 12px; color: var(--gold); }
+    .featured h3 { font-family: var(--f-head); font-weight: 800; font-size: 26px; line-height: 1.3; }
+    .featured p { margin: 0; color: var(--sub); }
+    .tools { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .tools li { border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; font-size: 13px; }
+    .tools b { display: block; font-size: 14px; }
+    .tools span { color: var(--sub); }
+    .points { margin: 0; padding-left: 1.2em; color: var(--sub); font-size: 14px; }
+    .points li::marker { color: var(--gold); }
 
-    /* タイル（作品） */
-    .tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 48px; }
-    .tile {
-      background: var(--bg); border-radius: 28px; padding: 44px 36px; text-align: center;
-      display: flex; flex-direction: column; align-items: center; gap: 10px; min-height: 280px; justify-content: center;
+    /* 作品一覧 */
+    .works { list-style: none; margin: 0; padding: 0; }
+    .work {
+      display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 24px;
+      padding-block: 22px; border-bottom: 1px solid var(--line);
     }
-    .tile.wide { grid-column: 1 / -1; }
-    .tile .tag { font-size: 14px; font-weight: 600; color: var(--new); }
-    .tile .tag.live { color: #1a8a3a; }
-    .tile .tag.soon { color: var(--sub); }
-    .tile h3 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; line-height: 1.15; }
-    .tile p { margin: 0; color: var(--sub); max-width: 26em; }
-    .tile a.more { margin-top: 6px; }
+    .work h3 { font-size: 18px; font-weight: 700; }
+    .work p { margin: 0; color: var(--sub); font-size: 14px; grid-column: 1; }
+    .work .stack { grid-column: 1; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .stack code { font-family: var(--f-mono); font-size: 12px; background: var(--code-bg); padding: 1px 8px; border-radius: 3px; }
+    .links { grid-column: 2; grid-row: 1 / span 3; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; font-family: var(--f-mono); font-size: 13px; padding-top: 2px; }
+    .links a { text-decoration: none; color: var(--maroon); white-space: nowrap; }
+    .links a:hover { text-decoration: underline; }
+    .featured .links { flex-direction: row; gap: 20px; align-items: center; grid-row: auto; grid-column: auto; }
 
-    /* 締め */
-    .final { text-align: center; }
-    .final .sec-title { font-size: clamp(40px, 7vw, 64px); }
-    .final .ctas { margin-top: 28px; display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; align-items: center; }
-
-    footer { background: var(--bg-alt); color: var(--sub); font-size: 12px; padding-block: 20px 36px; line-height: 1.6; }
-    footer .wrap > * { margin: 0; padding-block: 10px; }
-    footer .wrap > * + * { border-top: 1px solid #d2d2d7; }
-
-    @media (max-width: 734px) {
-      .localnav .lnk { display: none; }
-      .sec { padding-block: 80px; }
-      .specs { grid-template-columns: minmax(0, 1fr); gap: 44px; }
-      .tiles { grid-template-columns: minmax(0, 1fr); }
-      .tile { min-height: 0; padding: 40px 24px; }
+    /* 記事 */
+    .posts { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+    .post a {
+      display: grid; grid-template-columns: 7.5em minmax(0, 1fr); gap: 4px 20px;
+      padding-block: 20px; border-bottom: 1px solid var(--line); text-decoration: none;
     }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; }
+    .post time { font-family: var(--f-mono); font-size: 13px; color: var(--sub); padding-top: 2px; }
+    .post h3 { font-size: 17px; font-weight: 700; line-height: 1.5; }
+    .post a:hover h3 { color: var(--maroon); }
+    .post p { margin: 0; grid-column: 2; color: var(--sub); font-size: 14px; }
+    .post .stack { grid-column: 2; display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+
+    /* 連絡先 */
+    .contact { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .contact a {
+      display: grid; gap: 2px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 6px;
+      background: var(--surface); text-decoration: none; transition: border-color .2s;
+    }
+    .contact a:hover { border-color: var(--maroon); }
+    .contact b { font-size: 15px; }
+    .contact span { font-family: var(--f-mono); font-size: 12px; color: var(--sub); overflow-wrap: anywhere; }
+
+    footer { padding-block: 32px 48px; border-top: 1px solid var(--line); font-family: var(--f-mono); font-size: 12px; color: var(--sub); }
+
+    @media (max-width: 640px) {
+      .intro { padding-block: 48px 40px; }
+      .tools { grid-template-columns: minmax(0, 1fr); }
+      .work { grid-template-columns: minmax(0, 1fr); }
+      .work { display: flex; flex-direction: column; }
+      .links { order: 1; flex-direction: row; gap: 20px; margin-top: 6px; }
+      .post a { grid-template-columns: minmax(0, 1fr); }
+      .post p, .post .stack { grid-column: 1; }
+      .contact { grid-template-columns: minmax(0, 1fr); }
+      .featured { padding: 22px 18px; }
     }
   </style>
 </head>
 <body>
-  <nav class="localnav" aria-label="ページ内">
-    <div class="wrap">
-      <a class="name" href="#top">ザビエル</a>
-      <a class="lnk" href="#highlights">概要</a>
-      <a class="lnk" href="#works">作品</a>
-      <a class="pill" href="https://www.youtube.com/@%E3%82%B6%E3%83%93%E3%82%A8%E3%83%AB-zav" target="_blank" rel="noopener">登録</a>
-    </div>
-  </nav>
+  <div class="page">
+    <header class="top">
+      <a class="mark" href="#">Zavier</a>
+      <nav aria-label="ページ内">
+        <a href="#works">works</a>
+        <a href="#writing">writing</a>
+        <a href="#contact">contact</a>
+      </nav>
+    </header>
 
-  <header class="hero wrap" id="top">
-    <p class="eyebrow">ファンパレ実況</p>
-    <h1>ザビエル</h1>
-    <p class="tagline">実況も、開発も。全力で。</p>
-    <div class="ctas">
-      <a class="btn" href="https://www.youtube.com/@%E3%82%B6%E3%83%93%E3%82%A8%E3%83%AB-zav" target="_blank" rel="noopener">チャンネルを見る</a>
-      <a class="more" href="#works">作品を見る</a>
-    </div>
-  </header>
+    <main>
+      <section class="intro">
+        <p class="role">中学生バイブコーダー / Fullstack Explorer <span>·</span> Gunma, JP</p>
+        <h1>Zavier<small>ザビエル</small></h1>
+        <p class="about">独学で JavaScript / Python を学びながら、Gemini・Claude などの生成AIを相棒にアプリを作る「バイブコーディング」を実践しています。学校行事のシステム開発から、個人開発のゲーム・ツールまで、思いついたら手を動かすタイプです。</p>
+        <p class="motto">完璧より完成。<small>技育祭2026春への参加をきっかけに、作ったものをどんどん外に出すようにしています。</small></p>
+      </section>
 
-  <div class="stage" aria-hidden="true">
-    <div class="device">
-      <div class="screen">
-        <div class="island"></div>
-        <div class="sbar"><span>9:41</span><span>●●●</span></div>
-        <div class="banner"></div>
-        <div class="ch"><div class="ava">ザ</div><div><b>ザビエル</b><span>@ザビエル-zav</span></div></div>
-        <div class="sub-btn">チャンネル登録</div>
-        <div class="tabs"><span class="on">ホーム</span><span>動画</span><span>ショート</span></div>
-        <div class="vids">
-          <div class="vid"><div class="thumb t1"></div><div><b>ガチャ・バトル反応</b><span>ザビエル</span></div></div>
-          <div class="vid"><div class="thumb t2"></div><div><b>数値検証</b><span>ザビエル</span></div></div>
-          <div class="vid"><div class="thumb t3"></div><div><b>初心者向け豆知識</b><span>ザビエル</span></div></div>
-          <div class="vid"><div class="thumb t4"></div><div><b>個人開発の記録</b><span>ザビエル</span></div></div>
+      <section class="block" aria-labelledby="skills-h">
+        <div class="block-head"><h2 id="skills-h">Skills</h2></div>
+        <ul class="skills">
+          <li>JavaScript</li><li>Python</li><li>React</li><li>Next.js</li><li>Firebase</li><li>Supabase</li>
+          <li>Google Apps Script</li><li>HTML / CSS</li><li>SVG / Canvas</li><li>Git / GitHub</li><li>Vercel</li>
+        </ul>
+      </section>
+
+      <section class="block" id="works" aria-labelledby="works-h">
+        <div class="block-head"><h2 id="works-h">Works</h2><span class="count" id="works-count"></span></div>
+
+        <article class="featured">
+          <span class="eyebrow">featured · PWA</span>
+          <h3>ファンパレ便利ツール【非公式】</h3>
+          <p>スマホゲーム「呪術廻戦 ファントムパレード」のプレイヤー向けサポートツール集。自分で毎日使うために作りました。</p>
+          <ul class="tools">
+            <li><b>廻珠記録帳</b><span>所持数を記録してグラフ化</span></li>
+            <li><b>課金額記録帳</b><span>累計・月別の使用額を可視化</span></li>
+            <li><b>AP回復タイマー</b><span>全回復までの時間を計算</span></li>
+          </ul>
+          <ul class="points">
+            <li>データは端末内の localStorage のみに保存。サーバーへの送信なし</li>
+            <li>manifest.json でホーム画面に追加でき、アプリのように起動できる</li>
+            <li>ライブラリなしの Vanilla JS で実装</li>
+          </ul>
+          <div class="stack"><code>Vanilla JS</code><code>localStorage</code><code>PWA</code><code>GitHub Pages</code></div>
+          <div class="links">
+            <a href="https://zavier0305.github.io/phantomparade/" target="_blank" rel="noopener">Demo ↗</a>
+            <a href="https://github.com/Zavier0305/phantomparade" target="_blank" rel="noopener">Source ↗</a>
+          </div>
+        </article>
+
+        <ul class="works" id="works-list"></ul>
+      </section>
+
+      <section class="block" id="writing" aria-labelledby="writing-h">
+        <div class="block-head"><h2 id="writing-h">Writing</h2><span class="count">on Zenn</span></div>
+        <ul class="posts" id="posts"></ul>
+      </section>
+
+      <section class="block" id="contact" aria-labelledby="contact-h">
+        <div class="block-head"><h2 id="contact-h">Contact</h2></div>
+        <div class="contact">
+          <a href="https://github.com/Zavier0305" target="_blank" rel="noopener"><b>GitHub</b><span>@Zavier0305</span></a>
+          <a href="https://zenn.dev/zavier" target="_blank" rel="noopener"><b>Zenn</b><span>@zavier</span></a>
+          <a href="https://x.com/KantZav" target="_blank" rel="noopener"><b>X</b><span>@KantZav</span></a>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
+
+    <footer>© <span id="year"></span> Zavier</footer>
   </div>
 
-  <section class="sec alt" id="highlights">
-    <div class="wrap">
-      <h2 class="sec-title">ハイライトを見る。</h2>
-    </div>
-    <div class="rail" id="rail">
-      <article class="hl h1c"><h3>ガチャの瞬間を、<br>そのまま。</h3><p>新キャラのガチャやバトルを、リアクション込みでお届けします。</p><span class="big">01</span></article>
-      <article class="hl h2c"><h3>数字で、<br>確かめる。</h3><p>ダメージや性能を実際に試して、数値で比べます。</p><span class="big">%</span></article>
-      <article class="hl h3c"><h3>はじめてでも、<br>わかる。</h3><p>これから始める人向けのコツを、ショート動画で短く解説。</p><span class="big">?</span></article>
-      <article class="hl h4c"><h3>Claude Codeで、<br>つくる。</h3><p>非エンジニア出身。それでも、Webアプリやゲームを自分で作っています。</p><span class="big">&lt;/&gt;</span></article>
-    </div>
-    <div class="wrap rail-nav">
-      <button type="button" id="prev" aria-label="前へ">‹</button>
-      <button type="button" id="next" aria-label="次へ">›</button>
-    </div>
-  </section>
-
-  <section class="sec night">
-    <div class="wrap">
-      <h2 class="sec-title">実況 × 開発</h2>
-      <p class="sec-lead">ゲームを<b>遊ぶ</b>だけじゃない。<b>つくる</b>ところまで。<br>ひとりで、全部やっています。</p>
-      <div class="specs">
-        <div class="spec"><strong>3</strong><span>動画ジャンル</span></div>
-        <div class="spec"><strong>1</strong><span>人で企画・撮影・編集・開発</span></div>
-        <div class="spec"><strong>∞</strong><span>ガチャへの情熱</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec alt" id="works">
-    <div class="wrap">
-      <h2 class="sec-title">つくったもの。</h2>
-      <p class="sec-lead">Claude Codeと一緒に、<b>アイデアを形に。</b></p>
-      <div class="tiles" id="tiles"></div>
-    </div>
-  </section>
-
-  <section class="sec final">
-    <div class="wrap">
-      <h2 class="sec-title">次の動画を、<br>見逃さない。</h2>
-      <div class="ctas">
-        <a class="btn" href="https://www.youtube.com/@%E3%82%B6%E3%83%93%E3%82%A8%E3%83%AB-zav" target="_blank" rel="noopener">チャンネル登録する</a>
-        <a class="more" href="#top">トップへ戻る</a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="wrap">
-      <p>本サイトは個人のファンサイトです。ゲームの公式、および本ページのデザインの参考にしたいずれの企業とも関係ありません。</p>
-      <p>© <span id="year"></span> ザビエル</p>
-    </div>
-  </footer>
-
   <script>
-    // 作品リスト：ここを書き換えると「つくったもの」が更新されます
-    // state: "live"（公開中） / "wip"（開発中） / "soon"（準備中）、wide: true で横幅いっぱい
-    const works = [
-      { title: "ファンパレ便利ツール", desc: "ゲームをもっと快適に遊ぶための自作ツール。", state: "wip", url: "", wide: true },
-      { title: "このホームページ", desc: "Claude Codeと一緒に作ったプロフィールページ。", state: "live", url: "" },
-      { title: "次の作品", desc: "近日公開予定。", state: "soon", url: "" },
+    // 作品データ：Link-In-Bio と同じ内容。追加するときはここに1件足す
+    const projects = [
+      { title: "わけあって、将棋", desc: "本格的な将棋対局をWebで。Firebaseによるリアルタイム通信で対戦できる。", tech: ["React", "Firebase"], url: "https://shogi-app-pearl.vercel.app/", repo: "shogi-app" },
+      { title: "SmartFlow", desc: "直感的な操作で思考を可視化するフローチャートエンジン。描画はすべてSVG。", tech: ["SVG", "JavaScript"], url: "https://smartflow-rose-six.vercel.app/", repo: "SmartFlow" },
+      { title: "THE BUTTER", desc: "塗り残しゼロを目指す、バターの質感にこだわったシミュレーター。", tech: ["Canvas", "Physics"], url: "https://the-butter.vercel.app/", repo: "THE-BUTTER" },
+      { title: "Reverse Pomodoro", desc: "25分の休憩と5分の作業。ポモドーロを逆転させたタイマー。", tech: ["Vanilla JS"], url: "https://reversepomodorotimer.vercel.app/", repo: "ReversePomodoroTimer" },
+      { title: "GOKIBURYYYYY", desc: "画面を埋め尽くす黒い影を倒す、クリック精度が試されるサバイバルゲーム。", tech: ["Game"], url: "https://gokiburyyyyy.vercel.app/", repo: "GOKIBURYYYYY" },
     ];
-    const label = { live: "公開中", wip: "開発中", soon: "準備中" };
 
-    const tiles = document.getElementById("tiles");
-    for (const w of works) {
-      const el = document.createElement("article");
-      el.className = "tile" + (w.wide ? " wide" : "");
-      const tag = document.createElement("span"); tag.className = "tag " + w.state; tag.textContent = label[w.state];
-      const h = document.createElement("h3"); h.textContent = w.title;
-      const p = document.createElement("p"); p.textContent = w.desc;
-      el.append(tag, h, p);
-      if (w.url) {
-        const a = document.createElement("a"); a.className = "more"; a.href = w.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "見てみる";
-        el.append(a);
-      }
-      tiles.appendChild(el);
+    const articles = [
+      { title: "文化祭で受付兼ランキングシステムを作ったら共倒れした件", desc: "GASで冗長化したはずのシステムが、同一Googleアカウントの同時実行数制限で共倒れした話と、その緊急リカバリー。", date: "2026-07-05", tags: ["GAS", "障害対応"], url: "https://zenn.dev/zavier/articles/ee36a6bf62dac3" },
+      { title: "初心者が行く技育祭2026春の感想", desc: "技育祭2026春に参加して「完璧より完成」の大切さを学んだ話。", date: "2026-03-22", tags: ["技育祭", "Vibe Coding"], url: "https://zenn.dev/zavier/articles/9fb55c6caeda98" },
+    ];
+
+    const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+    const ext = (href, text) => { const a = el("a", null, text); a.href = href; a.target = "_blank"; a.rel = "noopener"; return a; };
+    const stack = (items) => { const d = el("div", "stack"); items.forEach((t) => d.append(el("code", null, t))); return d; };
+
+    const list = document.getElementById("works-list");
+    for (const p of projects) {
+      const li = el("li", "work");
+      const links = el("div", "links");
+      links.append(ext(p.url, "Demo ↗"), ext("https://github.com/Zavier0305/" + p.repo, "Source ↗"));
+      li.append(el("h3", null, p.title), links, el("p", null, p.desc), stack(p.tech));
+      list.append(li);
+    }
+    document.getElementById("works-count").textContent = (projects.length + 1) + " projects";
+
+    const posts = document.getElementById("posts");
+    for (const a of articles) {
+      const li = el("li", "post");
+      const link = ext(a.url);
+      const t = el("time", null, a.date.replaceAll("-", ".")); t.dateTime = a.date;
+      link.append(t, el("h3", null, a.title), el("p", null, a.desc), stack(a.tags));
+      posts.append(li); li.append(link);
     }
 
     document.getElementById("year").textContent = new Date().getFullYear();
-
-    // ハイライトの左右ボタン
-    const rail = document.getElementById("rail");
-    const step = () => rail.querySelector(".hl").offsetWidth + 20;
-    document.getElementById("prev").addEventListener("click", () => rail.scrollBy({ left: -step(), behavior: "smooth" }));
-    document.getElementById("next").addEventListener("click", () => rail.scrollBy({ left: step(), behavior: "smooth" }));
   </script>
 </body>
 </html>

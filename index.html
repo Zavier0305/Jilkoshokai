@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ザビエル | Zavier</title>
+  <meta name="description" content="ファンパレ実況YouTuber・ザビエルのホームページ。動画と個人開発の作品をまとめています。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f5fb;
+      --surface: #ffffff;
+      --text: #1d1b2b;
+      --muted: #5f5b75;
+      --accent: #6d4aff;
+      --accent-2: #00b3c7;
+      --border: #e3e0f0;
+      --yt: #e62117;
+      --shadow: 0 6px 24px rgba(40, 20, 120, .08);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0f0d1a;
+        --surface: #1a1729;
+        --text: #eeeaff;
+        --muted: #a6a0c4;
+        --accent: #9b82ff;
+        --accent-2: #3fd8e8;
+        --border: #2c2843;
+        --shadow: 0 6px 24px rgba(0, 0, 0, .35);
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #0f0d1a;
+      --surface: #1a1729;
+      --text: #eeeaff;
+      --muted: #a6a0c4;
+      --accent: #9b82ff;
+      --accent-2: #3fd8e8;
+      --border: #2c2843;
+      --shadow: 0 6px 24px rgba(0, 0, 0, .35);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "M PLUS Rounded 1c", system-ui, sans-serif;
+      line-height: 1.8;
+    }
+    a { color: var(--accent); }
+    .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px; }
+
+    /* ナビ */
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .wrap { display: flex; align-items: center; gap: 16px; height: 56px; }
+    nav .logo { font-weight: 800; text-decoration: none; color: var(--text); margin-right: auto; }
+    nav a.link { color: var(--muted); text-decoration: none; font-size: .9rem; }
+    nav a.link:hover { color: var(--accent); }
+    #theme-btn {
+      border: 1px solid var(--border); background: var(--surface); color: var(--text);
+      border-radius: 999px; width: 36px; height: 36px; cursor: pointer; font-size: 1rem;
+    }
+
+    /* ヒーロー */
+    .hero { padding: 72px 0 56px; text-align: center; }
+    .avatar {
+      width: 128px; height: 128px; border-radius: 50%; margin: 0 auto 20px;
+      display: grid; place-items: center; font-size: 3rem; font-weight: 800; color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: var(--shadow);
+    }
+    .hero h1 { font-size: clamp(2rem, 6vw, 3rem); margin: 0; line-height: 1.2; }
+    .hero .handle { color: var(--muted); margin: 4px 0 16px; }
+    .hero .tagline { font-size: 1.1rem; margin: 0 auto 28px; max-width: 34em; }
+    .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 28px; }
+    .tag {
+      font-size: .8rem; padding: 4px 12px; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 999px; font-weight: 700; text-decoration: none;
+      transition: transform .15s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-yt { background: var(--yt); color: #fff; }
+
+    /* セクション */
+    section { padding: 48px 0; }
+    h2 { font-size: 1.5rem; margin: 0 0 20px; display: flex; align-items: center; gap: 10px; }
+    h2::before {
+      content: ""; width: 6px; height: 1.2em; border-radius: 3px;
+      background: linear-gradient(var(--accent), var(--accent-2));
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px; box-shadow: var(--shadow);
+    }
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .grid .card h3 { margin: 0 0 8px; font-size: 1.1rem; }
+    .grid .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+    .emoji { font-size: 1.8rem; display: block; margin-bottom: 8px; }
+    .status {
+      display: inline-block; margin-top: 12px; font-size: .75rem; padding: 2px 10px;
+      border-radius: 999px; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent);
+    }
+    dl.profile { display: grid; grid-template-columns: max-content 1fr; gap: 8px 20px; margin: 0; }
+    dl.profile dt { color: var(--muted); }
+    dl.profile dd { margin: 0; }
+
+    footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 40px 0 56px; border-top: 1px solid var(--border); }
+
+    @media (max-width: 520px) {
+      nav a.link { display: none; }
+      dl.profile { grid-template-columns: 1fr; gap: 0; }
+      dl.profile dd { margin-bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap">
+      <a class="logo" href="#">ザビエル</a>
+      <a class="link" href="#about">About</a>
+      <a class="link" href="#youtube">YouTube</a>
+      <a class="link" href="#works">Works</a>
+      <button id="theme-btn" aria-label="テーマ切り替え">🌓</button>
+    </div>
+  </nav>
+
+  <header class="hero wrap">
+    <div class="avatar" aria-hidden="true">ザ</div>
+    <h1>ザビエル</h1>
+    <p class="handle">@ザビエル-zav</p>
+    <p class="tagline">ファンパレのゲーム実況をしながら、<br>Claude Codeで個人開発もしています。</p>
+    <div class="tags">
+      <span class="tag">🎮 ファンパレ実況</span>
+      <span class="tag">🛠 個人開発</span>
+      <span class="tag">🤖 Claude Code</span>
+    </div>
+    <a class="btn btn-yt" href="https://www.youtube.com/@%E3%82%B6%E3%83%93%E3%82%A8%E3%83%AB-zav" target="_blank" rel="noopener">▶ YouTubeチャンネルを見る</a>
+  </header>
+
+  <main class="wrap">
+    <section id="about">
+      <h2>About</h2>
+      <div class="card">
+        <dl class="profile">
+          <dt>名前</dt><dd>ザビエル（Zavier）</dd>
+          <dt>活動</dt><dd>YouTubeでファンパレ（呪術廻戦 ファントムパレード）のゲーム実況</dd>
+          <dt>開発</dt><dd>非エンジニア出身。Claude Codeを相棒に、Webアプリやゲームを作っています</dd>
+          <dt>好き</dt><dd>ゲーム / ものづくり / King Gnu</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="youtube">
+      <h2>YouTube</h2>
+      <div class="grid">
+        <div class="card">
+          <span class="emoji">🎰</span>
+          <h3>ガチャ・バトル反応</h3>
+          <p>新キャラのガチャやバトルを、リアクション込みでお届け。</p>
+        </div>
+        <div class="card">
+          <span class="emoji">📊</span>
+          <h3>数値検証</h3>
+          <p>ダメージや性能を実際に試して、数字で比べます。</p>
+        </div>
+        <div class="card">
+          <span class="emoji">💡</span>
+          <h3>初心者向け豆知識</h3>
+          <p>これから始める人向けのコツをショートで紹介。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="works">
+      <h2>Works</h2>
+      <div class="grid" id="works-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> ザビエル ・ ファンパレ実況 & 個人開発</p>
+    <p>※ 本サイトは個人のファンサイトであり、ゲーム公式とは関係ありません。</p>
+  </footer>
+
+  <script>
+    // 作品リスト：ここを書き換えるだけで Works 欄が更新されます
+    const works = [
+      { emoji: "🧰", title: "ファンパレ便利ツール", desc: "ゲームをもっと快適に遊ぶための自作ツール。", status: "開発中", url: "" },
+      { emoji: "🌐", title: "このホームページ", desc: "Claude Codeと一緒に作った自己紹介サイト。", status: "公開中", url: "" },
+      { emoji: "✨", title: "次の作品", desc: "近日公開予定。お楽しみに！", status: "準備中", url: "" },
+    ];
+
+    const grid = document.getElementById("works-grid");
+    for (const w of works) {
+      const el = document.createElement(w.url ? "a" : "div");
+      el.className = "card";
+      if (w.url) { el.href = w.url; el.target = "_blank"; el.rel = "noopener"; el.style.textDecoration = "none"; el.style.color = "inherit"; }
+      el.innerHTML = `<span class="emoji">${w.emoji}</span><h3></h3><p></p><span class="status"></span>`;
+      el.querySelector("h3").textContent = w.title;
+      el.querySelector("p").textContent = w.desc;
+      el.querySelector(".status").textContent = w.status;
+      grid.appendChild(el);
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ダークモード切り替え（選択はブラウザに保存）
+    const root = document.documentElement;
+    try { const t = localStorage.getItem("theme"); if (t) root.dataset.theme = t; } catch (e) {}
+    document.getElementById("theme-btn").addEventListener("click", () => {
+      const isDark = root.dataset.theme
+        ? root.dataset.theme === "dark"
+        : matchMedia("(prefers-color-scheme: dark)").matches;
+      root.dataset.theme = isDark ? "light" : "dark";
+      try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+    });
+  </script>
+</body>
+</html>
